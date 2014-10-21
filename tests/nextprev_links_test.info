@@ -1,0 +1,10 @@
+name = Next Prev Links Test
+description = Module to help testing of the Next Prev Links module
+package = SEO
+core = 7.x
+hidden = TRUE
+
+files[] = nextprev_links_test.module
+
+dependencies[] = nextprev_links
+dependencies[] = views

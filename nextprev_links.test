@@ -1,0 +1,72 @@
+<?php
+
+/**
+ * @file
+ * Definition of NextPrevLinksTest.
+ */
+
+/**
+ * Tests the pluggable pager system.
+ */
+class NextPrevLinksTest extends ViewsSqlTest {
+  public static function getInfo() {
+    return array(
+      'name' => 'Next Prev Links',
+      'description' => 'Test the setting of rel next and prev links',
+      'group' => 'SEO',
+    );
+  }
+
+  public function setUp() {
+    parent::setUp('nextprev_links', 'views');
+    module_enable(array('nextprev_links_test'));
+    $this->resetAll();
+  }
+
+  /**
+   * Test that rel links are introduced for Views displays.
+   */
+  function testNextPrevLinksRel() {
+    for ($i = 0; $i < 16; $i++) {
+      $this->drupalCreateNode();
+    }
+
+    $page = 'test_pager_nextprev_links_page';
+    $this->drupalGet($page);
+    $this->assertLink(t('last »'));
+    $this->assertNoLink(t('« first'));
+    $this->assertRaw('<link rel="next" href="/' . $page . '?page=1" />', 'Next URL was found in the HTML head');
+    $this->assertNoRaw('<link rel="prev"', 'Prev URL was not found in the HTML head');
+
+    $this->clickLink(t('last »'));
+    $this->assertLink(t('« first'));
+    $this->assertNoLink(t('last »'));
+    $this->assertNoRaw('<link rel="next"', 'Next URL was not found in the HTML head');
+    $this->assertRaw('<link rel="prev" href="/' . $page . '?page=2" />', 'Prev URL was found in the HTML head');
+
+    $this->clickLink(t('‹ previous'));
+    $this->assertLink(t('« first'));
+    $this->assertLink(t('last »'));
+    $this->assertRaw('<link rel="next" href="/' . $page . '?page=3" />', 'Next URL was found in the HTML head');
+    $this->assertRaw('<link rel="prev" href="/' . $page . '?page=1" />', 'Prev URL was found in the HTML head');
+
+    $page = 'test_pager_full_page';
+    $this->drupalGet($page);
+    $this->assertLink(t('last »'));
+    $this->assertNoLink(t('« first'));
+    $this->assertNoRaw('<link rel="next"', 'Next URL was not found in the HTML head');
+    $this->assertNoRaw('<link rel="prev"', 'Prev URL was not found in the HTML head');
+
+    $this->clickLink(t('last »'));
+    $this->assertLink(t('« first'));
+    $this->assertNoLink(t('last »'));
+    $this->assertNoRaw('<link rel="next"', 'Next URL was not found in the HTML head');
+    $this->assertNoRaw('<link rel="prev"', 'Prev URL was not found in the HTML head');
+
+    $this->clickLink(t('‹ previous'));
+    $this->assertLink(t('« first'));
+    $this->assertLink(t('last »'));
+    $this->assertNoRaw('<link rel="next"', 'Next URL was not found in the HTML head');
+    $this->assertNoRaw('<link rel="prev"', 'Prev URL was not found in the HTML head');
+  }
+}

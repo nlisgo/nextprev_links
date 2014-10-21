@@ -1,0 +1,15 @@
+<?php
+
+/**
+ * @file
+ * Helper module for Next Prev Links tests.
+ */
+
+/**
+ * Implements hook_views_api().
+ */
+function nextprev_links_test_views_api() {
+  return array(
+    'api' => 3.0,
+  );
+}

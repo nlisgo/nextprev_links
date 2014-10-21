@@ -1,0 +1,29 @@
+<?php
+
+/**
+ * @file
+ * 
+ * Main module file for Next Prev Links, contains core Drupal hook implementations
+ */
+
+/**
+ * Implements hook_views_api().
+ */
+function nextprev_links_views_api() {
+  return array('api' => '3.0');
+}
+
+/**
+ * Implements hook_theme().
+ */
+function nextprev_links_theme($existing, $type, $theme, $path) {
+  $items = array();
+
+  // Our extra version of pager from pager.inc
+  $items['nextprev_links_pager'] = array(
+    'file' => 'nextprev_links.theme.inc',
+    'variables' => array('tags' => array(), 'element' => 0, 'parameters' => array()),
+  );
+
+  return $items;
+}

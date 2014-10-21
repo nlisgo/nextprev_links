@@ -1,0 +1,9 @@
+name = Next Prev Links
+description = Prepares and outputs rel next and prev links in HTML head
+package = SEO
+core = 7.x
+
+files[] = nextprev_links.module
+files[] = nextprev_links.test
+
+dependencies[] = views
