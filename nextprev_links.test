@@ -13,7 +13,7 @@ class NextPrevLinksTest extends ViewsSqlTest {
     return array(
       'name' => 'Next Prev Links',
       'description' => 'Test the setting of rel next and prev links',
-      'group' => 'SEO',
+      'group' => 'Next Prev Links',
     );
   }
 
