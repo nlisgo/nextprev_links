@@ -51,6 +51,7 @@ function _nextprev_links_prep_rel_link($page_new, $element, $parameters = array(
       $_GET['q'],
       array(
         'query' => $query,
+        'absolute' => TRUE,
       )
     ),
   );
