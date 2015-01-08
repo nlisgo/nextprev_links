@@ -32,23 +32,24 @@ class NextPrevLinksTest extends ViewsSqlTest {
     }
 
     $page = 'test_pager_nextprev_links_page';
+    $page_absolute = url($page, array('absolute' => TRUE));
     $this->drupalGet($page);
     $this->assertLink(t('last »'));
     $this->assertNoLink(t('« first'));
-    $this->assertRaw('<link rel="next" href="/' . $page . '?page=1" />', 'Next URL was found in the HTML head');
+    $this->assertRaw('<link rel="next" href="' . $page_absolute . '?page=1" />', 'Next URL was found in the HTML head');
     $this->assertNoRaw('<link rel="prev"', 'Prev URL was not found in the HTML head');
 
     $this->clickLink(t('last »'));
     $this->assertLink(t('« first'));
     $this->assertNoLink(t('last »'));
     $this->assertNoRaw('<link rel="next"', 'Next URL was not found in the HTML head');
-    $this->assertRaw('<link rel="prev" href="/' . $page . '?page=2" />', 'Prev URL was found in the HTML head');
+    $this->assertRaw('<link rel="prev" href="' . $page_absolute . '?page=2" />', 'Prev URL was found in the HTML head');
 
     $this->clickLink(t('‹ previous'));
     $this->assertLink(t('« first'));
     $this->assertLink(t('last »'));
-    $this->assertRaw('<link rel="next" href="/' . $page . '?page=3" />', 'Next URL was found in the HTML head');
-    $this->assertRaw('<link rel="prev" href="/' . $page . '?page=1" />', 'Prev URL was found in the HTML head');
+    $this->assertRaw('<link rel="next" href="' . $page_absolute . '?page=3" />', 'Next URL was found in the HTML head');
+    $this->assertRaw('<link rel="prev" href="' . $page_absolute . '?page=1" />', 'Prev URL was found in the HTML head');
 
     $page = 'test_pager_full_page';
     $this->drupalGet($page);
