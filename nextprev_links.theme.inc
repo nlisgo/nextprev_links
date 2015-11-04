@@ -2,7 +2,7 @@
 
 /**
  * @file
- * 
+ *
  * Contains the theme callbacks for our module
  */
 
@@ -19,14 +19,20 @@ function theme_nextprev_links_pager($variables) {
     // Add rel="prev".
     $page_new = pager_load_array($pager_page_array[$element] - $interval, $element, $pager_page_array);
     $head_link = _nextprev_links_prep_rel_link($page_new, $element, $parameters, 'prev');
-    drupal_add_html_head_link($head_link);
+    drupal_add_html_head(array(
+      '#tag'        => 'link',
+      '#attributes' => $head_link
+    ), 'pager_prev_link');
   }
 
   if ($pager_page_array[$element] < ($pager_total[$element] - 1)) {
     // Add rel="next".
     $page_new = pager_load_array($pager_page_array[$element] + $interval, $element, $pager_page_array);
     $head_link = _nextprev_links_prep_rel_link($page_new, $element, $parameters, 'next');
-    drupal_add_html_head_link($head_link);
+    drupal_add_html_head(array(
+      '#tag'        => 'link',
+      '#attributes' => $head_link
+    ), 'pager_next_link');
   }
 
   return theme('pager', $variables);
