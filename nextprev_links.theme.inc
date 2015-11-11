@@ -2,7 +2,7 @@
 
 /**
  * @file
- * 
+ *
  * Contains the theme callbacks for our module
  */
 
@@ -19,14 +19,14 @@ function theme_nextprev_links_pager($variables) {
     // Add rel="prev".
     $page_new = pager_load_array($pager_page_array[$element] - $interval, $element, $pager_page_array);
     $head_link = _nextprev_links_prep_rel_link($page_new, $element, $parameters, 'prev');
-    drupal_add_html_head_link($head_link);
+    drupal_add_html_head($head_link, 'nextprev_links:prev:' . $head_link['#attributes']['href']);
   }
 
   if ($pager_page_array[$element] < ($pager_total[$element] - 1)) {
     // Add rel="next".
     $page_new = pager_load_array($pager_page_array[$element] + $interval, $element, $pager_page_array);
     $head_link = _nextprev_links_prep_rel_link($page_new, $element, $parameters, 'next');
-    drupal_add_html_head_link($head_link);
+    drupal_add_html_head($head_link, 'nextprev_links:next:' . $head_link['#attributes']['href']);
   }
 
   return theme('pager', $variables);
@@ -45,14 +45,18 @@ function _nextprev_links_prep_rel_link($page_new, $element, $parameters = array(
   if ($query_pager = pager_get_query_parameters()) {
     $query = array_merge($query, $query_pager);
   }
+
   return array(
-    'rel' => $rel,
-    'href' => url(
-      $_GET['q'],
-      array(
-        'query' => $query,
-        'absolute' => TRUE,
-      )
+    '#tag' => 'link',
+    '#attributes' => array(
+      'rel' => $rel,
+      'href' => url(
+        $_GET['q'],
+        array(
+          'query' => $query,
+          'absolute' => TRUE,
+        )
+      ),
     ),
   );
 }
